@@ -4,7 +4,7 @@ class Score:
     def __init__(self):
         self.url_all_matches="http://cricapi.com/api/matches"
         self.url_score="http://cricapi.com/api/cricketScore"
-        self.api_key="Rtz0dCItCdczLYWexVkd5ff6oPr2"
+        self.api_key="your cric api key" #your cric api key is the key that you will get after signing up an account in cricapi
         self.id=""
     
     def get_id(self):
@@ -43,7 +43,7 @@ if __name__ == "__main__":
     send=match.get_id()
     print(send)
     from twilio.rest import Client
-    account_sid='ACe4349d13e26c6c80c5a8e362974c0a83'
-    auth_token='2cf4376dd11b4e1cf480557e2da550a1'
+    account_sid='your twilio account sid'  #Sid for your Twilio account
+    auth_token='your twilio account authorisation token' #The token for your Twilio account
     client=Client(account_sid,auth_token)
     message=client.messages.create(body=send,from_='whatsapp:+14155238886',to='whatsapp:+919436946555')
