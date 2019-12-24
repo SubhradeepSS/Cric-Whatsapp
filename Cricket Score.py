@@ -46,4 +46,4 @@ if __name__ == "__main__":
     account_sid='your twilio account sid'  #Sid for your Twilio account
     auth_token='your twilio account authorisation token' #The token for your Twilio account
     client=Client(account_sid,auth_token)
-    message=client.messages.create(body=send,from_='whatsapp:+14155238886',to='whatsapp:+919436946555')
+    message=client.messages.create(body=send,from_='whatsapp:+14155238886',to='whatsapp:+91 Your Whatsapp number') #Your Whatsapp number-number on which you want to get messages
