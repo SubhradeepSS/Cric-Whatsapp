@@ -9,6 +9,6 @@ This is the API used for getting live cricket updates.</br>
 ## Twilio
 This is used for sending messages to whatsapp number</br>
 * Install by using pip install twilio
-* Create an account in Twilio [here](https://www.twilio.com/)
+* Create an account in [Twilio](https://www.twilio.com/)
 * The account will have an account sid which is to be used as "your twilio account sid" in the code
 * Also an authorisation token will be present to be used as "your twilio account authorisation token" in the code
