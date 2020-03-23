@@ -1,49 +1,54 @@
 import requests
+from twilio.rest import Client
 from datetime import datetime
-class Score:
+
+
+class get_Score:
     def __init__(self):
-        self.url_all_matches="http://cricapi.com/api/matches"
-        self.url_score="http://cricapi.com/api/cricketScore"
-        self.api_key="your cric api key" #your cric api key is the key that you will get after signing up an account in cricapi
-        self.id=""
-    
-    def get_id(self):
-        uri_params={"apikey":self.api_key}
-        response=requests.get(self.url_all_matches,params=uri_params)
-        response_dict=response.json()
-        id_found=0
+        self.url_get_all_matches = "https://cricapi.com/api/matches"
+        self.get_score = "https://cricapi.com/api/cricketScore"
+        self.apikey = ''
+        self.unique_id_of_match = ''
+
+    def get_unique_id(self):
+        uri_params = {'apikey': self.apikey}
+        response = requests.get(self.url_get_all_matches, uri_params)
+        india_match_is_there = 0
+        response_dict = response.json()
+
         for i in response_dict['matches']:
-            if(i['team-1']=='India' or i['team-2']=='India' and i['matchStarted']):
-                today_date=datetime.today().strftime('%Y-%m-%d')
-                if today_date==i['date'].split('T')[0]:
-                    id_found=1
-                    self.id=i['unique_id']
+            if i['team-1'] == 'India' or i['team-2'] == 'India' and i['matchStarted']:
+                today_date = datetime.today().strftime('%Y-%m-%d')
+                if today_date == i['date'].split('T')[0]:
+                    self.unique_id_of_match = i['unique_id']
+                    india_match_is_there = 1
                     break
-        if not id_found:
-            self.id=-1
-        data=self.get_score(self.id)
-        return data
+        if not india_match_is_there:
+            self.unique_id_of_match = -1
 
-    def get_score(self,id):
-        data=''
-        if id==-1:
-            data='No live India matches'
+        data_from_site = self.get_current_score()
+        print(data_from_site)
+        return data_from_site
+
+    def get_current_score(self):
+        data = ''
+        if self.unique_id_of_match == -1:
+            data = 'No India matches today'
         else:
-            uri_params={"apikey":self.api_key,"unique-id":id}
-            response=requests.get(self.get_score,params=uri_params)
-            data_json=response.json()
+            uri_params = {'apikey': self.apikey, 'unique_id': self.unique_id_of_match}
+            response = requests.get(self.get_score, uri_params)
+            response_dict = response.json()
             try:
-                data="Score :"+"\n"+data_json['stat']+"\n"+data_json['score']
+                data = 'Score is :\n' + response_dict['stat'] + '\n' + response_dict['score']
             except KeyError as e:
-                data="Something went wrong!!"+"\n"+"Please try again"
+                print(e)
         return data
 
-if __name__ == "__main__":
-    match=Score()
-    send=match.get_id()
-    print(send)
-    from twilio.rest import Client
-    account_sid='your twilio account sid'  #Sid for your Twilio account
-    auth_token='your twilio account authorisation token' #The token for your Twilio account
-    client=Client(account_sid,auth_token)
-    message=client.messages.create(body=send,from_='whatsapp:+14155238886',to='whatsapp:Your Whatsapp number') #Your Whatsapp number-number on which you want to get messages
+
+if __name__ == '__main__':
+    obj_score = get_Score()
+    whatsapp_message = obj_score.get_unique_id()
+    account_sid = ''
+    account_auth_token = ''
+    client = Client(account_sid, account_auth_token)
+    message = client.messages.create(body=whatsapp_message, from_='whatsapp:+14155238886', to='whatsapp:')
