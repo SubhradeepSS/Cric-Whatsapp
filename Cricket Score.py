@@ -1,6 +1,7 @@
 import requests
 from twilio.rest import Client
 from datetime import datetime
+from apscheduler.schedulers.blocking import BlockingScheduler
 
 
 class get_Score:
@@ -45,10 +46,17 @@ class get_Score:
         return data
 
 
-if __name__ == '__main__':
+def main():
     obj_score = get_Score()
     whatsapp_message = obj_score.get_unique_id()
     account_sid = ''
     account_auth_token = ''
     client = Client(account_sid, account_auth_token)
-    message = client.messages.create(body=whatsapp_message, from_='whatsapp:+14155238886', to='whatsapp:')
+    client.messages.create(body=whatsapp_message, from_='whatsapp:+14155238886', to='whatsapp:+919436946555')
+
+
+def regular_interval_scheduler():
+    scheduler = BlockingScheduler()
+    scheduler.add_job(main, 'interval', seconds=5)
+    scheduler.start()
+
