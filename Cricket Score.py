@@ -52,11 +52,18 @@ def main():
     account_sid = ''
     account_auth_token = ''
     client = Client(account_sid, account_auth_token)
-    client.messages.create(body=whatsapp_message, from_='whatsapp:+14155238886', to='whatsapp:+919436946555')
+    client.messages.create(body=whatsapp_message, from_='whatsapp:+14155238886', to='whatsapp:')
 
 
 def regular_interval_scheduler():
     scheduler = BlockingScheduler()
     scheduler.add_job(main, 'interval', seconds=5)
+    scheduler.start()
+
+
+def particular_datetime_scheduler():
+    scheduler = BlockingScheduler()
+    date_time = datetime(year=2020, month=3, day=25, hour=0, minute=47, second=0, microsecond=0)
+    scheduler.add_job(main, 'date', run_date=date_time)
     scheduler.start()
 
