@@ -55,6 +55,12 @@ def main():
     client.messages.create(body=whatsapp_message, from_='whatsapp:+14155238886', to='whatsapp:')
 
 
+"""
+ Reference for using apscheduler - 
+ https://apscheduler.readthedocs.io/en/stable/userguide.html
+"""
+
+
 def regular_interval_scheduler():
     scheduler = BlockingScheduler()
     scheduler.add_job(main, 'interval', seconds=5)
@@ -67,3 +73,9 @@ def particular_datetime_scheduler():
     scheduler.add_job(main, 'date', run_date=date_time)
     scheduler.start()
 
+
+def any_type_scheduler():
+    scheduler = BlockingScheduler()
+    scheduler.add_job(main, 'cron', year=None, month=None, day=None, week=None, day_of_week=None, hour=None,
+                      minute=None, second=None, start_date=None, end_date=None, timezone=None, jitter=None)
+    scheduler.start()
