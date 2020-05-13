@@ -1,6 +1,7 @@
 import requests
 from twilio.rest import Client
 from datetime import datetime
+import os
 from apscheduler.schedulers.blocking import BlockingScheduler
 
 
@@ -46,7 +47,7 @@ class get_Score:
         return data
 
 
-def main():
+def whatsapp_main():
     obj_score = get_Score()
     whatsapp_message = obj_score.get_unique_id()
     account_sid = ''
@@ -63,19 +64,20 @@ def main():
 
 def regular_interval_scheduler():
     scheduler = BlockingScheduler()
-    scheduler.add_job(main, 'interval', seconds=5)
+    scheduler.add_job(whatsapp_main, 'interval', seconds=5)
     scheduler.start()
 
 
 def particular_datetime_scheduler():
     scheduler = BlockingScheduler()
     date_time = datetime(year=2020, month=3, day=25, hour=0, minute=47, second=0, microsecond=0)
-    scheduler.add_job(main, 'date', run_date=date_time)
+    scheduler.add_job(whatsapp_main, 'date', run_date=date_time)
     scheduler.start()
 
 
 def any_type_scheduler():
     scheduler = BlockingScheduler()
-    scheduler.add_job(main, 'cron', year=None, month=None, day=None, week=None, day_of_week=None, hour=None,
+    scheduler.add_job(whatsapp_main, 'cron', year=None, month=None, day=None, week=None, day_of_week=None, hour=None,
                       minute=None, second=None, start_date=None, end_date=None, timezone=None, jitter=None)
     scheduler.start()
+
