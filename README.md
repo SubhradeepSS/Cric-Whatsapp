@@ -1,5 +1,5 @@
 # Cricket_Live
-Live Cricket Score can be obtained on Whatsapp through message from a bot
+A Live Cricket Score fetcher that can fetch live cricket stats about any team using the Cric API and send updates as a WhatsApp message using Twilio sandbox. Also implemented a basic Flask web interface in which the desired team name can be entered and the live score (if applicable) will be displayed on the screen.
 
 ## Cric API
 API used for getting live cricket updates.</br>
