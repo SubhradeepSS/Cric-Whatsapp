@@ -26,11 +26,6 @@ def fetch_stats(team_name):
         return e
 
 
-
-TEAM = 'Kolkata Knight Riders'
-print(fetch_stats(TEAM))
-
-
 def sendWPMsg(team_name):
     whatsapp_message = fetch_stats(team_name)
     account_sid = TWILIO['account_sid']
@@ -44,4 +39,5 @@ def sendWPMsg(team_name):
         print(e)
 
 
-sendWPMsg(TEAM)
+team = input('Enter the name of the team you want to know stats about: ')
+sendWPMsg(team)
